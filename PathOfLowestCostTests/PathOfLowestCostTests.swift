@@ -19,17 +19,32 @@ class PathOfLowestCostTests: XCTestCase {
         super.tearDown()
     }
     
-    let dataSet1 = [[3, 4, 1, 2, 8, 6],
-                    [6, 1, 8, 2, 7, 4],
-                    [5, 9, 3, 9, 9, 5],
-                    [8, 4, 1, 3, 2, 6],
-                    [3, 7, 2, 8, 6, 4]]
+    let dataSetWithTrueLowestCost =
+        [[3, 4, 1, 2, 8, 6],
+         [6, 1, 8, 2, 7, 4],
+         [5, 9, 3, 9, 9, 5],
+         [8, 4, 1, 3, 2, 6],
+         [3, 7, 2, 8, 6, 4]]
     
-    func testDataSet1() {
+    
+    let dataSetWithFalseLowestCost =
+        [[19, 10, 19, 10, 19],
+         [21, 23, 20, 19, 12],
+         [20, 12, 20, 11, 10]]
+    
+    
+    func testDataWithTrueLowestCost() {
         let pathOfLowestCostCalculator = PathOfLowestCostCalculator()
-        let result = pathOfLowestCostCalculator.calculateLowestCost(dataSet: dataSet1)
+        let result = pathOfLowestCostCalculator.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
         XCTAssertNotNil(result)
         XCTAssertEqual(result!, true)
+    }
+    
+    func testDataWithFalseLowestCost() {
+        let pathOfLowestCostCalculator = PathOfLowestCostCalculator()
+        let result = pathOfLowestCostCalculator.calculateLowestCost(dataSet: dataSetWithFalseLowestCost)
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result!, false)
     }
     
 }
