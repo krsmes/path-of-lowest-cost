@@ -15,7 +15,7 @@ class PathOfLowestCostCalculator {
     var rowCount = 0
     var columnCount = 0
     
-    func calculateLowestCost(dataSet: [[Int]]) -> Bool? {
+    func calculateLowestCost(dataSet: [[Int]]) -> (isPathPassable: Bool, lowestCost: Int) {
         self.dataSet = dataSet
         rowCount = dataSet.count
         columnCount = dataSet[0].count
@@ -26,7 +26,7 @@ class PathOfLowestCostCalculator {
             print("lowest cost for row \(rowIndex) is \(lowestCostForRow)")
             lowestTotalCost = min(lowestTotalCost, lowestCostForRow)
         }
-        return lowestTotalCost < abandonPathValue
+        return (isPathPassable: lowestTotalCost < abandonPathValue, lowestCost: lowestTotalCost)
     }
     
     func lowestCostAtPosition(cost: Int, column: Int, row: Int) -> Int {
