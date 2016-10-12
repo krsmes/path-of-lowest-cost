@@ -14,6 +14,7 @@
 		D43FABBE1DAECE8B00640774 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D43FABBC1DAECE8B00640774 /* LaunchScreen.storyboard */; };
 		D43FABC91DAECE8B00640774 /* PathOfLowestCostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FABC81DAECE8B00640774 /* PathOfLowestCostTests.swift */; };
 		D43FABD41DAECE8B00640774 /* PathOfLowestCostUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FABD31DAECE8B00640774 /* PathOfLowestCostUITests.swift */; };
+		D43FABE21DAECECF00640774 /* PathOfLowestCostCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FABE11DAECECF00640774 /* PathOfLowestCostCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		D43FABCF1DAECE8B00640774 /* PathOfLowestCostUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PathOfLowestCostUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43FABD31DAECE8B00640774 /* PathOfLowestCostUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathOfLowestCostUITests.swift; sourceTree = "<group>"; };
 		D43FABD51DAECE8B00640774 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D43FABE11DAECECF00640774 /* PathOfLowestCostCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathOfLowestCostCalculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				D43FABBA1DAECE8B00640774 /* Assets.xcassets */,
 				D43FABBC1DAECE8B00640774 /* LaunchScreen.storyboard */,
 				D43FABBF1DAECE8B00640774 /* Info.plist */,
+				D43FABE11DAECECF00640774 /* PathOfLowestCostCalculator.swift */,
 			);
 			path = PathOfLowestCost;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 			files = (
 				D43FABB61DAECE8B00640774 /* ViewController.swift in Sources */,
 				D43FABB41DAECE8B00640774 /* AppDelegate.swift in Sources */,
+				D43FABE21DAECECF00640774 /* PathOfLowestCostCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
