@@ -11,8 +11,11 @@ import XCTest
 
 class PathOfLowestCostTests: XCTestCase {
     
+    var pathOfLowestCostCalculator: PathOfLowestCostCalculator?
+    
     override func setUp() {
         super.setUp()
+        pathOfLowestCostCalculator = PathOfLowestCostCalculator()
     }
     
     override func tearDown() {
@@ -34,26 +37,22 @@ class PathOfLowestCostTests: XCTestCase {
     
     
     func testDataWithTrueLowestCost() {
-        let pathOfLowestCostCalculator = PathOfLowestCostCalculator()
-        let result = pathOfLowestCostCalculator.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
         XCTAssertEqual(result.isPathPassable, true)
     }
     
     func testDataWithFalseLowestCost() {
-        let pathOfLowestCostCalculator = PathOfLowestCostCalculator()
-        let result = pathOfLowestCostCalculator.calculateLowestCost(dataSet: dataSetWithFalseLowestCost)
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithFalseLowestCost)
         XCTAssertEqual(result.isPathPassable, false)
     }
     
     func testDataWithTrueLowestCostHas16AsLowestCost() {
-        let pathOfLowestCostCalculator = PathOfLowestCostCalculator()
-        let result = pathOfLowestCostCalculator.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
         XCTAssertEqual(result.lowestCost, 16)
     }
     
     func testDataWithFalseLowestCostHas68AsLowestCost() {
-        let pathOfLowestCostCalculator = PathOfLowestCostCalculator()
-        let result = pathOfLowestCostCalculator.calculateLowestCost(dataSet: dataSetWithFalseLowestCost)
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithFalseLowestCost)
         XCTAssertEqual(result.lowestCost, 68)
     }
 
