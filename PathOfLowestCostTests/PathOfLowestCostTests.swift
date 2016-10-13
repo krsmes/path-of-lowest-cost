@@ -35,10 +35,16 @@ class PathOfLowestCostTests: XCTestCase {
          [21, 23, 20, 19, 12],
          [20, 12, 20, 11, 10]]
     
+    let dataSetWithWrapping =
+        [[3, 4, 1, 2, 8, 6],
+         [6, 1, 8, 2, 7, 4],
+         [5, 9, 3, 9, 9, 5],
+         [8, 4, 1, 3, 2, 6],
+         [3, 7, 2, 1, 2, 3]]
+    
     
     func testDataWithTrueLowestCost() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
-        print("result.isPathPassable = \(result.isPathPassable)")
         XCTAssertEqual(result.isPathPassable, true)
     }
     
@@ -55,6 +61,16 @@ class PathOfLowestCostTests: XCTestCase {
     func testDataWithFalseLowestCostHas68AsLowestCost() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithFalseLowestCost)
         XCTAssertEqual(result.lowestCost, 48)
+    }
+    
+    func testDataWithWrapping() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithWrapping)
+        XCTAssertEqual(result.isPathPassable, true)
+    }
+    
+    func testDataWithWrappingHas11AsLowestCost() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithWrapping)
+        XCTAssertEqual(result.lowestCost, 11)
     }
     
 }
