@@ -13,33 +13,32 @@ class ViewControllerTests: XCTestCase {
     
     var viewController: ViewController?
     
-    func testPassableResultLabelIsConnected() {
+    override func setUp() {
+        super.setUp()
         setupFromStoryboard()
+    }
+
+    func testPassableResultLabelIsConnected() {
         XCTAssertNotNil(viewController!.passableResultLabel)
     }
     
     func testCostResultLabelIsConnected() {
-        setupFromStoryboard()
         XCTAssertNotNil(viewController!.costResultLabel)
     }
 
     func testPathResultLabelIsConnected() {
-        setupFromStoryboard()
         XCTAssertNotNil(viewController!.pathResultLabel)
     }
 
     func testDataSet1ButtonIsConnected() {
-        setupFromStoryboard()
         XCTAssertNotNil(viewController!.dataSet1Button)
     }
 
     func testDataSet2ButtonIsConnected() {
-        setupFromStoryboard()
         XCTAssertNotNil(viewController!.dataSet2Button)
     }
 
     func testDataSet3ButtonIsConnected() {
-        setupFromStoryboard()
         XCTAssertNotNil(viewController!.dataSet3Button)
     }
     
