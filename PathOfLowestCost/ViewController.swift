@@ -9,17 +9,27 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    
+    @IBOutlet weak var passableResultLabel: UILabel!
+    @IBOutlet weak var costResultLabel: UILabel!
+    @IBOutlet weak var pathResultLabel: UILabel!
+    
+    @IBOutlet weak var dataSet1Button: UIButton!
+    @IBOutlet weak var dataSet2Button: UIButton!
+    @IBOutlet weak var dataSet3Button: UIButton!
+    
+    let calculator = PathOfLowestCostCalculator()
+    let passableString = "Yes"
+    let notPassableString = "No"
+    
+    @IBAction func dataSet1Selected() {
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func dataSet2Selected() {
+   }
+    
+    @IBAction func dataSet3Selected() {
     }
-
-
+    
 }
 

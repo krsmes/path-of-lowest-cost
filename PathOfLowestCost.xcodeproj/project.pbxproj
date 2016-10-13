@@ -15,6 +15,7 @@
 		D43FABC91DAECE8B00640774 /* PathOfLowestCostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FABC81DAECE8B00640774 /* PathOfLowestCostTests.swift */; };
 		D43FABD41DAECE8B00640774 /* PathOfLowestCostUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FABD31DAECE8B00640774 /* PathOfLowestCostUITests.swift */; };
 		D43FABE21DAECECF00640774 /* PathOfLowestCostCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FABE11DAECECF00640774 /* PathOfLowestCostCalculator.swift */; };
+		D43FABEA1DB011CF00640774 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FABE91DB011CE00640774 /* ViewControllerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		D43FABD31DAECE8B00640774 /* PathOfLowestCostUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathOfLowestCostUITests.swift; sourceTree = "<group>"; };
 		D43FABD51DAECE8B00640774 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D43FABE11DAECECF00640774 /* PathOfLowestCostCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathOfLowestCostCalculator.swift; sourceTree = "<group>"; };
+		D43FABE91DB011CE00640774 /* ViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 		D43FABC71DAECE8B00640774 /* PathOfLowestCostTests */ = {
 			isa = PBXGroup;
 			children = (
+				D43FABE91DB011CE00640774 /* ViewControllerTests.swift */,
 				D43FABC81DAECE8B00640774 /* PathOfLowestCostTests.swift */,
 				D43FABCA1DAECE8B00640774 /* Info.plist */,
 			);
@@ -275,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D43FABEA1DB011CF00640774 /* ViewControllerTests.swift in Sources */,
 				D43FABC91DAECE8B00640774 /* PathOfLowestCostTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,6 +520,7 @@
 				D43FABDA1DAECE8B00640774 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D43FABDB1DAECE8B00640774 /* Build configuration list for PBXNativeTarget "PathOfLowestCostTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +529,7 @@
 				D43FABDD1DAECE8B00640774 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D43FABDE1DAECE8B00640774 /* Build configuration list for PBXNativeTarget "PathOfLowestCostUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +538,7 @@
 				D43FABE01DAECE8B00640774 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
