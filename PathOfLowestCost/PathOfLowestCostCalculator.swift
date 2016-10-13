@@ -21,24 +21,62 @@ class PathOfLowestCostCalculator {
         columnCount = dataSet[0].count
         
         var lowestTotalCost = Int.max
+        var lowestCostAbandoned = false
         for rowIndex in 0 ..< rowCount {
-            let lowestCostForRow = lowestCostAtPosition(cost: 0, column: columnCount - 1, row: rowIndex)
-            lowestTotalCost = min(lowestTotalCost, lowestCostForRow)
+            let lowestCostResult = lowestCostAtPosition(column: columnCount - 1, row: rowIndex)
+            if lowestCostResult.lowestCost < lowestTotalCost {
+                lowestTotalCost = lowestCostResult.lowestCost
+                lowestCostAbandoned = lowestCostResult.abandoned
+            }
         }
-        return (isPathPassable: lowestTotalCost < abandonPathValue, lowestCost: lowestTotalCost)
+        return (isPathPassable: !lowestCostAbandoned, lowestCost: lowestTotalCost)
     }
     
-    func lowestCostAtPosition(cost: Int, column: Int, row: Int) -> Int {
+    func lowestCostAtPosition(column: Int, row: Int) -> (lowestCost: Int, abandoned: Bool) {
+        let rowAbove = row == 0 ? rowCount - 1 : row - 1
+        let rowBelow = row == rowCount - 1 ? 0 : row + 1
+        
         if column > 0 {
-            let costAbove = cost + lowestCostAtPosition(cost: cost, column: column-1, row: row == 0 ? rowCount - 1 : row - 1) + dataSet[row][column]
-            let costInRow = cost + lowestCostAtPosition(cost: cost, column: column-1, row: row) + dataSet[row][column]
-            let costBelow = cost + lowestCostAtPosition(cost: cost, column: column-1, row: row == rowCount - 1 ? 0 : row + 1) + dataSet[row][column]
-            return min(costInRow, min(costAbove, costBelow))
+            let resultForRowAbove = lowestCostAtPosition(column: column-1, row: rowAbove)
+            let costAbove = resultForRowAbove.lowestCost
+            
+            let resultForRow = lowestCostAtPosition(column: column-1, row: row)
+            let costInRow = resultForRow.lowestCost
+            
+            let resultForRowBelow = lowestCostAtPosition(column: column-1, row: rowBelow)
+            let costBelow = resultForRowBelow.lowestCost
+            
+            let valueForRowColumn = dataSet[row][column]
+            
+            if costAbove < costInRow && costAbove < costBelow {
+                if (costAbove + valueForRowColumn > abandonPathValue || resultForRowAbove.abandoned) {
+                    return (lowestCost: costAbove, abandoned: true)
+                }
+                return (lowestCost: costAbove + valueForRowColumn, abandoned: false)
+            } else if costInRow < costBelow || resultForRow.abandoned {
+                if (costInRow + valueForRowColumn > abandonPathValue) {
+                    return (lowestCost: costInRow, abandoned: true)
+                }
+               return (lowestCost: costInRow + valueForRowColumn, abandoned: false)
+            } else {
+                if (costBelow + valueForRowColumn > abandonPathValue || resultForRowBelow.abandoned) {
+                    return (lowestCost: costBelow, abandoned: true)
+                }
+                return (lowestCost: costBelow + valueForRowColumn, abandoned: false)
+            }
+            
         } else {
-            let costAbove = dataSet[row == 0 ? rowCount - 1 : row - 1][0]
+            let costAbove = dataSet[rowAbove][0]
             let costInRow = dataSet[row][0]
-            let costBelow = dataSet[row == rowCount - 1 ? 0 : row + 1][0]
-            return min(costInRow, min(costAbove, costBelow))
+            let costBelow = dataSet[rowBelow][0]
+            
+            if costAbove < costInRow && costAbove < costBelow {
+                return (lowestCost: costAbove, abandoned: costAbove > abandonPathValue)
+            } else if costInRow < costBelow {
+                return (lowestCost: costInRow, abandoned: costInRow > abandonPathValue)
+            } else {
+                return (lowestCost: costBelow, abandoned: costBelow > abandonPathValue)
+            }
         }
     }
     
