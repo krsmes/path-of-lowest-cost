@@ -42,6 +42,16 @@ class PathOfLowestCostTests: XCTestCase {
          [8, 4, 1, 3, 2, 6],
          [3, 7, 2, 1, 2, 3]]
     
+    let largeDataSet =
+        [[3, 4, 1, 2, 8, 6, 6, 9, 9, 3, 3],
+         [6, 1, 8, 2, 7, 4, 9, 4, 6, 5, 8],
+         [5, 9, 3, 9, 9, 5, 8, 7, 8, 6, 9],
+         [8, 4, 1, 3, 2, 6, 4, 9, 4, 7, 1],
+         [5, 7, 2, 1, 2, 3, 1, 9, 2, 1, 8],
+         [9, 8, 7, 4, 6, 5, 9, 0, 8, 6, 7],
+         [9, 8, 9, 5, 7, 6, 4, 2, 9, 9, 0],
+         [5, 6, 8, 13, 8, 9, 3, 1, 1, 6, 8],
+         [5, 4, 8, 2, 4, 1, 2, 5, 7, 9, 7]]
     
     func testDataWithTrueLowestCost() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
@@ -52,6 +62,7 @@ class PathOfLowestCostTests: XCTestCase {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithFalseLowestCost)
         XCTAssertEqual(result.isPathPassable, false)
     }
+
     
     func testDataWithTrueLowestCostHas16AsLowestCost() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
@@ -86,6 +97,21 @@ class PathOfLowestCostTests: XCTestCase {
     func testDataWithWrappingReturnsLowestCostPath() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithWrapping)
         XCTAssertEqual(result.path, [1, 2, 1, 5, 5, 5])
+    }
+    
+    func testLargeDataSetReturnsTrueForPassable() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: largeDataSet)
+        XCTAssertEqual(result.isPathPassable, true)
+    }
+    
+    func testLargeDataSetReturnsCorrectValueForLowestCost() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: largeDataSet)
+        XCTAssertEqual(result.lowestCost, 20)
+    }
+    
+    func testLargeDataSetReturnsCorrectPath() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: largeDataSet)
+        XCTAssertEqual(result.path, [1, 2, 3, 4, 5, 5, 5, 6, 5, 5, 4])
     }
 
 }
