@@ -73,4 +73,19 @@ class PathOfLowestCostTests: XCTestCase {
         XCTAssertEqual(result.lowestCost, 11)
     }
     
+    func testDataWithTrueLowestCostReturnsLowestCostPath() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
+        XCTAssertEqual(result.path, [1, 2, 3, 4, 4, 5])
+    }
+    
+    func testDataWithFalseLowestCostReturnsLowestCostPath() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithFalseLowestCost)
+        XCTAssertEqual(result.path, [1, 1, 1])
+    }
+    
+    func testDataWithWrappingReturnsLowestCostPath() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithWrapping)
+        XCTAssertEqual(result.path, [1, 2, 1, 5, 5, 5])
+    }
+
 }
