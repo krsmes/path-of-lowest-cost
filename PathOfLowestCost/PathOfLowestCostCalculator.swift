@@ -49,35 +49,40 @@ class PathOfLowestCostCalculator {
             let valueForRowColumn = dataSet[row][column]
             
             if costAbove < costInRow && costAbove < costBelow {
-                if (costAbove + valueForRowColumn > abandonPathValue || resultForRowAbove.abandoned) {
-                    return (lowestCost: costAbove, abandoned: true)
-                }
-                return (lowestCost: costAbove + valueForRowColumn, abandoned: false)
-            } else if costInRow < costBelow || resultForRow.abandoned {
-                if (costInRow + valueForRowColumn > abandonPathValue) {
-                    return (lowestCost: costInRow, abandoned: true)
-                }
-               return (lowestCost: costInRow + valueForRowColumn, abandoned: false)
+                return shouldAbandon(cost: costAbove, valueForRowColumn: valueForRowColumn, previouslyAbandoned: resultForRowAbove.abandoned)
+            } else if costInRow < costBelow  {
+                return shouldAbandon(cost: costInRow, valueForRowColumn: valueForRowColumn, previouslyAbandoned: resultForRow.abandoned)
             } else {
-                if (costBelow + valueForRowColumn > abandonPathValue || resultForRowBelow.abandoned) {
-                    return (lowestCost: costBelow, abandoned: true)
-                }
-                return (lowestCost: costBelow + valueForRowColumn, abandoned: false)
+                return shouldAbandon(cost: costBelow, valueForRowColumn: valueForRowColumn, previouslyAbandoned: resultForRowBelow.abandoned)
             }
-            
         } else {
-            let costAbove = dataSet[rowAbove][0]
-            let costInRow = dataSet[row][0]
-            let costBelow = dataSet[rowBelow][0]
-            
-            if costAbove < costInRow && costAbove < costBelow {
-                return (lowestCost: costAbove, abandoned: costAbove > abandonPathValue)
-            } else if costInRow < costBelow {
-                return (lowestCost: costInRow, abandoned: costInRow > abandonPathValue)
-            } else {
-                return (lowestCost: costBelow, abandoned: costBelow > abandonPathValue)
-            }
+            return lowestCostInFirstColumn(row: row)
         }
+    }
+    
+    func shouldAbandon(cost: Int, valueForRowColumn: Int, previouslyAbandoned: Bool) -> (lowestCost: Int, abandoned: Bool) {
+        if (cost + valueForRowColumn > abandonPathValue || previouslyAbandoned) {
+            return (lowestCost: cost, abandoned: true)
+        }
+        return (lowestCost: cost + valueForRowColumn, abandoned: false)
+    }
+    
+    func lowestCostInFirstColumn(row: Int) -> (lowestCost: Int, abandoned: Bool) {
+        let rowAbove = row == 0 ? rowCount - 1 : row - 1
+        let rowBelow = row == rowCount - 1 ? 0 : row + 1
+
+        let costAbove = dataSet[rowAbove][0]
+        let costInRow = dataSet[row][0]
+        let costBelow = dataSet[rowBelow][0]
+        
+        if costAbove < costInRow && costAbove < costBelow {
+            return (lowestCost: costAbove, abandoned: costAbove > abandonPathValue)
+        } else if costInRow < costBelow {
+            return (lowestCost: costInRow, abandoned: costInRow > abandonPathValue)
+        } else {
+            return (lowestCost: costBelow, abandoned: costBelow > abandonPathValue)
+        }
+
     }
     
 }
