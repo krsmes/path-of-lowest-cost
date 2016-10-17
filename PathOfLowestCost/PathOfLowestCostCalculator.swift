@@ -15,62 +15,52 @@ class PathOfLowestCostCalculator {
     var rowCount = 0
     var columnCount = 0
     
-    func calculateLowestCost(dataSet: [[Int]]) -> (isPathPassable: Bool, lowestCost: Int, path: [Int]) {
+    func calculateLowestCost(dataSet: [[Int]]) -> PathOfLowestCostResult {
         self.dataSet = dataSet
         rowCount = dataSet.count
         columnCount = dataSet[0].count
         
-        var lowestTotalCost = Int.max
-        var lowestCostAbandoned = false
-        var lowestCostPath: [Int] = []
+        var lowestResult = PathOfLowestCostResult(isPathPassable: false, lowestCost: Int.max, path: [])
         
         for rowIndex in 0 ..< rowCount {
             let lowestCostResult = lowestCostAtPosition(column: columnCount - 1, row: rowIndex)
-            if lowestCostResult.lowestCost < lowestTotalCost {
-                lowestTotalCost = lowestCostResult.lowestCost
-                lowestCostAbandoned = lowestCostResult.abandoned
-                lowestCostPath = lowestCostResult.path
+            if lowestCostResult.lowestCost < lowestResult.lowestCost {
+                lowestResult = lowestCostResult
             }
         }
-        return (isPathPassable: !lowestCostAbandoned, lowestCost: lowestTotalCost, path: lowestCostPath)
+        
+        return (lowestResult)
     }
     
-    func lowestCostAtPosition(column: Int, row: Int) -> (lowestCost: Int, abandoned: Bool, path: [Int]) {
+    func lowestCostAtPosition(column: Int, row: Int) -> PathOfLowestCostResult {
         let rowAbove = row == 0 ? rowCount - 1 : row - 1
         let rowBelow = row == rowCount - 1 ? 0 : row + 1
         
         if column > 0 {
             let resultForRowAbove = lowestCostAtPosition(column: column-1, row: rowAbove)
-            let costAbove = resultForRowAbove.lowestCost
-            
             let resultForRow = lowestCostAtPosition(column: column-1, row: row)
-            let costInRow = resultForRow.lowestCost
-            
             let resultForRowBelow = lowestCostAtPosition(column: column-1, row: rowBelow)
-            let costBelow = resultForRowBelow.lowestCost
             
-            let valueForRowColumn = dataSet[row][column]
-            
-            if costAbove < costInRow && costAbove < costBelow {
-                return shouldAbandon(cost: costAbove, valueForRowColumn: valueForRowColumn, previouslyAbandoned: resultForRowAbove.abandoned, path: resultForRowAbove.path, row: row)
-            } else if costInRow < costBelow  {
-                return shouldAbandon(cost: costInRow, valueForRowColumn: valueForRowColumn, previouslyAbandoned: resultForRow.abandoned, path: resultForRow.path, row: row)
+            if resultForRowAbove.lowestCost < resultForRow.lowestCost && resultForRowAbove.lowestCost < resultForRowBelow.lowestCost {
+                return shouldAbandon(result: resultForRowAbove, valueForRowColumn: dataSet[row][column], row: row)
+            } else if resultForRow.lowestCost < resultForRowBelow.lowestCost  {
+                return shouldAbandon(result: resultForRow, valueForRowColumn: dataSet[row][column], row: row)
             } else {
-                return shouldAbandon(cost: costBelow, valueForRowColumn: valueForRowColumn, previouslyAbandoned: resultForRowBelow.abandoned, path: resultForRowBelow.path, row: row)
+                return shouldAbandon(result: resultForRowBelow, valueForRowColumn: dataSet[row][column],  row: row)
             }
         } else {
             return lowestCostInFirstColumn(row: row)
         }
     }
     
-    func shouldAbandon(cost: Int, valueForRowColumn: Int, previouslyAbandoned: Bool, path: [Int], row: Int) -> (lowestCost: Int, abandoned: Bool, path: [Int]) {
-        if (cost + valueForRowColumn > abandonPathValue || previouslyAbandoned) {
-            return (lowestCost: cost, abandoned: true, path)
+    func shouldAbandon(result: PathOfLowestCostResult, valueForRowColumn: Int, row: Int) -> PathOfLowestCostResult {
+        if (result.lowestCost + valueForRowColumn > abandonPathValue || !result.isPathPassable) {
+            return PathOfLowestCostResult(isPathPassable: false, lowestCost: result.lowestCost, path: result.path)
         }
-        return (lowestCost: cost + valueForRowColumn, abandoned: false, path + [row+1])
+        return PathOfLowestCostResult(isPathPassable: true, lowestCost: result.lowestCost + valueForRowColumn, path: result.path + [row+1])
     }
     
-    func lowestCostInFirstColumn(row: Int) -> (lowestCost: Int, abandoned: Bool, path: [Int]) {
+    func lowestCostInFirstColumn(row: Int) -> PathOfLowestCostResult {
         let rowAbove = row == 0 ? rowCount - 1 : row - 1
         let rowBelow = row == rowCount - 1 ? 0 : row + 1
 
@@ -79,11 +69,11 @@ class PathOfLowestCostCalculator {
         let costBelow = dataSet[rowBelow][0]
         
         if costAbove < costInRow && costAbove < costBelow {
-            return (lowestCost: costAbove, abandoned: costAbove > abandonPathValue, [rowAbove+1])
+            return PathOfLowestCostResult(isPathPassable: costAbove <= abandonPathValue, lowestCost: costAbove, path: [rowAbove+1])
         } else if costInRow < costBelow {
-            return (lowestCost: costInRow, abandoned: costInRow > abandonPathValue, [row+1])
+            return PathOfLowestCostResult(isPathPassable: costInRow <= abandonPathValue, lowestCost: costInRow, path: [row+1])
         } else {
-            return (lowestCost: costBelow, abandoned: costBelow > abandonPathValue, [rowBelow+1])
+            return PathOfLowestCostResult(isPathPassable: costBelow <= abandonPathValue, lowestCost: costBelow, path: [rowBelow+1])
         }
     }
     

@@ -16,6 +16,7 @@
 		D43FABD41DAECE8B00640774 /* PathOfLowestCostUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FABD31DAECE8B00640774 /* PathOfLowestCostUITests.swift */; };
 		D43FABE21DAECECF00640774 /* PathOfLowestCostCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FABE11DAECECF00640774 /* PathOfLowestCostCalculator.swift */; };
 		D43FABEA1DB011CF00640774 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FABE91DB011CE00640774 /* ViewControllerTests.swift */; };
+		D4F98ECE1DB522D70009CE4C /* PathOfLowestCostResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F98ECD1DB522D70009CE4C /* PathOfLowestCostResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		D43FABD51DAECE8B00640774 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D43FABE11DAECECF00640774 /* PathOfLowestCostCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathOfLowestCostCalculator.swift; sourceTree = "<group>"; };
 		D43FABE91DB011CE00640774 /* ViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
+		D4F98ECD1DB522D70009CE4C /* PathOfLowestCostResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathOfLowestCostResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,10 +106,11 @@
 				D43FABB31DAECE8B00640774 /* AppDelegate.swift */,
 				D43FABB51DAECE8B00640774 /* ViewController.swift */,
 				D43FABB71DAECE8B00640774 /* Main.storyboard */,
-				D43FABBA1DAECE8B00640774 /* Assets.xcassets */,
 				D43FABBC1DAECE8B00640774 /* LaunchScreen.storyboard */,
+				D43FABBA1DAECE8B00640774 /* Assets.xcassets */,
 				D43FABBF1DAECE8B00640774 /* Info.plist */,
 				D43FABE11DAECECF00640774 /* PathOfLowestCostCalculator.swift */,
+				D4F98ECD1DB522D70009CE4C /* PathOfLowestCostResult.swift */,
 			);
 			path = PathOfLowestCost;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 			files = (
 				D43FABB61DAECE8B00640774 /* ViewController.swift in Sources */,
 				D43FABB41DAECE8B00640774 /* AppDelegate.swift in Sources */,
+				D4F98ECE1DB522D70009CE4C /* PathOfLowestCostResult.swift in Sources */,
 				D43FABE21DAECECF00640774 /* PathOfLowestCostCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

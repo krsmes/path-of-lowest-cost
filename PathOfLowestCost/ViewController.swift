@@ -22,11 +22,6 @@ class ViewController: UIViewController {
     let passableString = "Yes"
     let notPassableString = "No"
     
-    let dataSet2 = [[3, 4, 1, 2, 8, 6], [6, 1, 8, 2, 7, 4], [5, 9, 3, 9, 9, 5], [8, 4, 1, 3, 2, 6], [3, 7, 2, 1, 2, 3]]
-    let dataSet3 = [[19, 10, 19, 10, 19], [21, 23, 20, 19, 12], [20, 12, 20, 11, 10]]
-    let dataSet4 = [[], [], [], [], []]
-    
-    
     @IBAction func dataSet1Selected() {
         let dataSet =
             [[3, 4, 1, 2, 8, 6],
@@ -77,7 +72,7 @@ class ViewController: UIViewController {
         for pathValue in path {
             pathString += "\(pathValue)" + " "
         }
-        pathResultLabel!.text = pathString
+        pathResultLabel.text = pathString
     }    
 }
 
