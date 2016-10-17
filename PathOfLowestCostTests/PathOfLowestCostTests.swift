@@ -145,4 +145,10 @@ class PathOfLowestCostTests: XCTestCase {
         XCTAssertEqual(result.path, result.path)
     }
     
+    func testCalculateTwiceResetsStoredCosts() {
+        let _ = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithFalseLowestCost)
+        XCTAssertEqual(result.path, [1, 1, 1])
+    }
+    
 }

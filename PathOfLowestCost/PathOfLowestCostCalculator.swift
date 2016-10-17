@@ -40,9 +40,9 @@ class PathOfLowestCostCalculator {
         let rowBelow = row == rowCount - 1 ? 0 : row + 1
         
         if column > 0 {
-            let resultForRowAbove = computeCost(row: rowAbove, column: column-1)
-            let resultForRow = computeCost(row: row, column: column-1)
-            let resultForRowBelow = computeCost(row: rowBelow, column: column-1)
+            let resultForRowAbove = cost(row: rowAbove, column: column-1)
+            let resultForRow = cost(row: row, column: column-1)
+            let resultForRowBelow = cost(row: rowBelow, column: column-1)
             
             if resultForRowAbove.lowestCost < resultForRow.lowestCost && resultForRowAbove.lowestCost < resultForRowBelow.lowestCost {
                 return shouldAbandon(result: resultForRowAbove, valueForRowColumn: dataSet[row][column], row: row)
@@ -81,6 +81,7 @@ class PathOfLowestCostCalculator {
     }
     
     fileprivate func setupComputedResults() {
+        computedResults = []
         for _ in 0 ..< rowCount {
             var columnResults: [PathOfLowestCostResult] = []
             for _ in 0 ..< columnCount {
@@ -90,7 +91,7 @@ class PathOfLowestCostCalculator {
         }
     }
     
-    fileprivate func computeCost(row: Int, column: Int) -> PathOfLowestCostResult {
+    fileprivate func cost(row: Int, column: Int) -> PathOfLowestCostResult {
         if computedResults[row][column].lowestCost > -1 {
             return computedResults[row][column]
         } else {
