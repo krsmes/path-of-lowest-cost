@@ -10,20 +10,23 @@ import Foundation
 
 class PathOfLowestCostCalculator {
     
-    let abandonPathValue = 50
-    var dataSet: [[Int]] = [[]]
-    var rowCount = 0
-    var columnCount = 0
+    private let abandonPathValue = 50
+    private var dataSet: [[Int]] = [[]]
+    private var rowCount = 0
+    private var columnCount = 0
+    private var computedResults: [[PathOfLowestCostResult]] = []
     
     func calculateLowestCost(dataSet: [[Int]]) -> PathOfLowestCostResult {
         self.dataSet = dataSet
         rowCount = dataSet.count
         columnCount = dataSet[0].count
         
+        setupComputedResults()
+        
         var lowestResult = PathOfLowestCostResult(isPathPassable: false, lowestCost: Int.max, path: [])
         
         for rowIndex in 0 ..< rowCount {
-            let lowestCostResult = lowestCostAtPosition(column: columnCount - 1, row: rowIndex)
+            let lowestCostResult = lowestCostAtPosition(row: rowIndex, column: columnCount - 1)
             if lowestCostResult.lowestCost < lowestResult.lowestCost {
                 lowestResult = lowestCostResult
             }
@@ -32,14 +35,14 @@ class PathOfLowestCostCalculator {
         return (lowestResult)
     }
     
-    func lowestCostAtPosition(column: Int, row: Int) -> PathOfLowestCostResult {
+    fileprivate func lowestCostAtPosition(row: Int, column: Int) -> PathOfLowestCostResult {
         let rowAbove = row == 0 ? rowCount - 1 : row - 1
         let rowBelow = row == rowCount - 1 ? 0 : row + 1
         
         if column > 0 {
-            let resultForRowAbove = lowestCostAtPosition(column: column-1, row: rowAbove)
-            let resultForRow = lowestCostAtPosition(column: column-1, row: row)
-            let resultForRowBelow = lowestCostAtPosition(column: column-1, row: rowBelow)
+            let resultForRowAbove = computeResultAtPath(row: rowAbove, column: column-1)
+            let resultForRow = computeResultAtPath(row: row, column: column-1)
+            let resultForRowBelow = computeResultAtPath(row: rowBelow, column: column-1)
             
             if resultForRowAbove.lowestCost < resultForRow.lowestCost && resultForRowAbove.lowestCost < resultForRowBelow.lowestCost {
                 return shouldAbandon(result: resultForRowAbove, valueForRowColumn: dataSet[row][column], row: row)
@@ -53,14 +56,14 @@ class PathOfLowestCostCalculator {
         }
     }
     
-    func shouldAbandon(result: PathOfLowestCostResult, valueForRowColumn: Int, row: Int) -> PathOfLowestCostResult {
+    fileprivate func shouldAbandon(result: PathOfLowestCostResult, valueForRowColumn: Int, row: Int) -> PathOfLowestCostResult {
         if (result.lowestCost + valueForRowColumn > abandonPathValue || !result.isPathPassable) {
             return PathOfLowestCostResult(isPathPassable: false, lowestCost: result.lowestCost, path: result.path)
         }
         return PathOfLowestCostResult(isPathPassable: true, lowestCost: result.lowestCost + valueForRowColumn, path: result.path + [row+1])
     }
     
-    func lowestCostInFirstColumn(row: Int) -> PathOfLowestCostResult {
+    fileprivate func lowestCostInFirstColumn(row: Int) -> PathOfLowestCostResult {
         let rowAbove = row == 0 ? rowCount - 1 : row - 1
         let rowBelow = row == rowCount - 1 ? 0 : row + 1
 
@@ -74,6 +77,26 @@ class PathOfLowestCostCalculator {
             return PathOfLowestCostResult(isPathPassable: costInRow <= abandonPathValue, lowestCost: costInRow, path: [row+1])
         } else {
             return PathOfLowestCostResult(isPathPassable: costBelow <= abandonPathValue, lowestCost: costBelow, path: [rowBelow+1])
+        }
+    }
+    
+    fileprivate func setupComputedResults() {
+        for _ in 0 ..< rowCount {
+            var columnResults: [PathOfLowestCostResult] = []
+            for _ in 0 ..< columnCount {
+                columnResults.append(PathOfLowestCostResult(isPathPassable: false, lowestCost: -1, path: []))
+            }
+            computedResults.append(columnResults)
+        }
+    }
+    
+    fileprivate func computeResultAtPath(row: Int, column: Int) -> PathOfLowestCostResult {
+        if computedResults[row][column].lowestCost > -1 {
+            return computedResults[row][column]
+        } else {
+            let result = lowestCostAtPosition(row: row, column: column)
+            computedResults[row][column] = result
+            return result
         }
     }
     

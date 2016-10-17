@@ -9,6 +9,8 @@
 import XCTest
 @testable import PathOfLowestCost
 
+let megaDataSetSize = 100
+
 class PathOfLowestCostTests: XCTestCase {
     
     var pathOfLowestCostCalculator: PathOfLowestCostCalculator?
@@ -51,6 +53,18 @@ class PathOfLowestCostTests: XCTestCase {
          [9, 8, 9, 5, 7, 6, 4, 2, 9, 9, 0],
          [5, 6, 8, 13, 8, 9, 3, 1, 1, 6, 8],
          [5, 4, 8, 2, 4, 1, 2, 5, 7, 9, 7]]
+    
+    var megaDataSet: [[Int]] = {
+        var dataSet: [[Int]] = []
+        for rowIndex in 0 ..< megaDataSetSize {
+            var row: [Int] = []
+            for columnIndex in 0 ..< megaDataSetSize {
+                row.append(rowIndex == columnIndex ? 0 : 10)
+            }
+            dataSet.append(row)
+        }
+        return dataSet
+    }()
     
     func testDataWithTrueLowestCost() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
@@ -110,6 +124,25 @@ class PathOfLowestCostTests: XCTestCase {
     func testLargeDataSetReturnsCorrectPath() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: largeDataSet)
         XCTAssertEqual(result.path, [1, 2, 3, 4, 5, 5, 5, 6, 5, 5, 4])
+    }
+    
+    func testMegaDataSetReturnsTrue() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: megaDataSet)
+        XCTAssertEqual(result.isPathPassable, true)
+    }
+    
+    func testMegaDataSetReturnsCorrectCost() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: megaDataSet)
+        XCTAssertEqual(result.lowestCost, 0)
+    }
+    
+    func testMegaDataSetReturnsCorrectPath() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: megaDataSet)
+        var path: [Int] = []
+        for index in 0 ..< megaDataSetSize {
+            path.append(index)
+        }
+        XCTAssertEqual(result.path, result.path)
     }
     
 }
