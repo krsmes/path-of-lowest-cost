@@ -92,6 +92,13 @@ class PathOfLowestCostTests: XCTestCase {
         }
         return dataSet
     }()
+    
+    let dataSetWithNegativeNumbers =
+        [[-3, 4, 1, 2, 1, 6],
+         [6, -1, 8, -2, 7, 1],
+         [5, 9, -3, 9, 9, 5],
+         [8, 4, 1, 3, 2, 6],
+         [3, 7, 2, 8, 6, 4]]
 
     func testDataWithTrueLowestCost() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
@@ -196,5 +203,20 @@ class PathOfLowestCostTests: XCTestCase {
     func testTooManyColumns() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: notEnoughColumnsDataSet)
         XCTAssertEqual(result.lowestCost, InvalidNumberOfColumnsCost)
+    }
+    
+    func testDataSetWithNegativeNumbersIsPassable() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithNegativeNumbers)
+        XCTAssertEqual(result.isPathPassable, true)
+    }
+    
+    func testDataSetWithNegativeNumbersHasCorrectCost() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithNegativeNumbers)
+        XCTAssertEqual(result.lowestCost, -7)
+    }
+    
+    func testDataSetWithNegativeNumbersHasCorrectPath() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithNegativeNumbers)
+        XCTAssertEqual(result.path, [1, 2, 3, 2, 1, 2])
     }
 }
