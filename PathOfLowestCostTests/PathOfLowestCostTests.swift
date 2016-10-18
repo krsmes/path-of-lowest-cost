@@ -9,7 +9,8 @@
 import XCTest
 @testable import PathOfLowestCost
 
-let megaDataSetSize = 100
+let megaDataSetColumns = 100
+let megaDataSetRows = 10
 
 class PathOfLowestCostTests: XCTestCase {
     
@@ -56,16 +57,42 @@ class PathOfLowestCostTests: XCTestCase {
     
     var megaDataSet: [[Int]] = {
         var dataSet: [[Int]] = []
-        for rowIndex in 0 ..< megaDataSetSize {
+        for rowIndex in 0 ..< megaDataSetRows {
             var row: [Int] = []
-            for columnIndex in 0 ..< megaDataSetSize {
-                row.append(rowIndex == columnIndex ? 0 : 10)
+            for columnIndex in 0 ..< megaDataSetColumns {
+                row.append(rowIndex == 0 ? 0 : 10)
             }
             dataSet.append(row)
         }
         return dataSet
     }()
     
+    var tooManyRowsDataSet:  [[Int]] = {
+        var dataSet: [[Int]] = []
+        for rowIndex in 0 ..< MaximumRowCount + 1 {
+            var row: [Int] = []
+            for columnIndex in 0 ..< 10 {
+                row.append(rowIndex == 0 ? 0 : 10)
+            }
+            dataSet.append(row)
+        }
+        return dataSet
+    }()
+    
+    let notEnoughColumnsDataSet = [[1, 2, 3]]
+    
+    var tooManyColumnsDataSet:  [[Int]] = {
+        var dataSet: [[Int]] = []
+        for rowIndex in 0 ..< 2 {
+            var row: [Int] = []
+            for columnIndex in 0 ..< MaximumColumnCount + 1 {
+                row.append(rowIndex == 0 ? 0 : 10)
+            }
+            dataSet.append(row)
+        }
+        return dataSet
+    }()
+
     func testDataWithTrueLowestCost() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
         XCTAssertEqual(result.isPathPassable, true)
@@ -139,8 +166,8 @@ class PathOfLowestCostTests: XCTestCase {
     func testMegaDataSetReturnsCorrectPath() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: megaDataSet)
         var path: [Int] = []
-        for index in 0 ..< megaDataSetSize {
-            path.append(index)
+        for _ in 0 ..< megaDataSetColumns {
+            path.append(0)
         }
         XCTAssertEqual(result.path, result.path)
     }
@@ -151,4 +178,23 @@ class PathOfLowestCostTests: XCTestCase {
         XCTAssertEqual(result.path, [1, 1, 1])
     }
     
+    func testNotEnoughRows() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: [])
+        XCTAssertEqual(result.lowestCost, InvalidNumberOfRowsCost)
+    }
+    
+    func testTooManyRows() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: tooManyRowsDataSet)
+        XCTAssertEqual(result.lowestCost, InvalidNumberOfRowsCost)
+    }
+    
+    func testNotEnoughColumns() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: notEnoughColumnsDataSet)
+        XCTAssertEqual(result.lowestCost, InvalidNumberOfColumnsCost)
+    }
+    
+    func testTooManyColumns() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: notEnoughColumnsDataSet)
+        XCTAssertEqual(result.lowestCost, InvalidNumberOfColumnsCost)
+    }
 }

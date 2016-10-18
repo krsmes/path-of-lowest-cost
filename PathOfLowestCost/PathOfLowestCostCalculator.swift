@@ -8,6 +8,13 @@
 
 import Foundation
 
+let InvalidNumberOfRowsCost = -1
+let InvalidNumberOfColumnsCost = -2
+let MinimumRowCount = 1
+let MaximumRowCount = 10
+let MinimumColumnCount = 5
+let MaximumColumnCount = 100
+
 class PathOfLowestCostCalculator {
     
     private let abandonPathValue = 50
@@ -19,7 +26,13 @@ class PathOfLowestCostCalculator {
     func calculateLowestCost(dataSet: [[Int]]) -> PathOfLowestCostResult {
         self.dataSet = dataSet
         rowCount = dataSet.count
+        if rowCount < MinimumRowCount || rowCount > MaximumRowCount {
+            return PathOfLowestCostResult(isPathPassable: false, lowestCost: InvalidNumberOfRowsCost, path: [])
+        }
         columnCount = dataSet[0].count
+        if (columnCount < MinimumColumnCount || columnCount > MaximumColumnCount) {
+            return PathOfLowestCostResult(isPathPassable: false, lowestCost: InvalidNumberOfColumnsCost, path: [])
+        }
         
         setupComputedResults()
         
