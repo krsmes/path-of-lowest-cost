@@ -99,6 +99,13 @@ class PathOfLowestCostTests: XCTestCase {
          [5, 9, -3, 9, 9, 5],
          [8, 4, 1, 3, 2, 6],
          [3, 7, 2, 8, 6, 4]]
+    
+    let dataSetWithMinusOneCost =         [[-3, 4, 1, 2, 1, 8],
+                                           [6, -1, 8, -2, 7, 7],
+                                           [5, 9, -3, 9, 9, 10],
+                                           [8, 4, 1, 3, 2, 6],
+                                           [3, 7, 2, 8, 6, 14]]
+    
 
     func testDataWithTrueLowestCost() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithTrueLowestCost)
@@ -187,22 +194,22 @@ class PathOfLowestCostTests: XCTestCase {
     
     func testNotEnoughRows() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: [])
-        XCTAssertEqual(result.lowestCost, InvalidNumberOfRowsCost)
+        XCTAssertTrue(result.isInvalidForNumberOfRows())
     }
     
     func testTooManyRows() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: tooManyRowsDataSet)
-        XCTAssertEqual(result.lowestCost, InvalidNumberOfRowsCost)
+        XCTAssertTrue(result.isInvalidForNumberOfRows())
     }
     
     func testNotEnoughColumns() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: notEnoughColumnsDataSet)
-        XCTAssertEqual(result.lowestCost, InvalidNumberOfColumnsCost)
+        XCTAssertTrue(result.isInvalidForNumberOfColumns())
     }
     
     func testTooManyColumns() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: notEnoughColumnsDataSet)
-        XCTAssertEqual(result.lowestCost, InvalidNumberOfColumnsCost)
+        XCTAssertTrue(result.isInvalidForNumberOfColumns())
     }
     
     func testDataSetWithNegativeNumbersIsPassable() {
@@ -218,5 +225,11 @@ class PathOfLowestCostTests: XCTestCase {
     func testDataSetWithNegativeNumbersHasCorrectPath() {
         let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithNegativeNumbers)
         XCTAssertEqual(result.path, [1, 2, 3, 2, 1, 2])
+    }
+    
+    func testCostResultIsNegativeOne() {
+        let result = pathOfLowestCostCalculator!.calculateLowestCost(dataSet: dataSetWithMinusOneCost)
+        XCTAssertEqual(result.lowestCost, -1)
+        XCTAssertFalse(result.isInvalidForNumberOfColumns())
     }
 }

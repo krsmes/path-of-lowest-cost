@@ -8,8 +8,6 @@
 
 import Foundation
 
-let InvalidNumberOfRowsCost = -1
-let InvalidNumberOfColumnsCost = -2
 let MinimumRowCount = 1
 let MaximumRowCount = 10
 let MinimumColumnCount = 5
@@ -27,11 +25,15 @@ class PathOfLowestCostCalculator {
         self.dataSet = dataSet
         rowCount = dataSet.count
         if rowCount < MinimumRowCount || rowCount > MaximumRowCount {
-            return PathOfLowestCostResult(isPathPassable: false, lowestCost: InvalidNumberOfRowsCost, path: [])
+            let result = PathOfLowestCostResult(isPathPassable: false, lowestCost: 0, path: [])
+            result.dataSetFailedForInvalidNumberOfRows()
+            return result
         }
         columnCount = dataSet[0].count
         if (columnCount < MinimumColumnCount || columnCount > MaximumColumnCount) {
-            return PathOfLowestCostResult(isPathPassable: false, lowestCost: InvalidNumberOfColumnsCost, path: [])
+            let result = PathOfLowestCostResult(isPathPassable: false, lowestCost: 0, path: [])
+            result.dataSetFailedForInvalidNumberOfColumns()
+            return result
         }
         
         setupComputedResults()
